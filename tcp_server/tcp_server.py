@@ -18,7 +18,8 @@ def handle_client(client_socket):
 	
 	print("[*] Received: %s" % request.decode('utf-8'))
 	
-	client_socket.send("ACK!")
+	client_socket.send("ACK!".encode('utf-8'))
+
 	client_socket.close()
 	
 while True:
