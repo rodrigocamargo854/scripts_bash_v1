@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#emails_file="todos_emails.txt"
+
+HOST=$1
+TYPE1=$2
+TYPE2=$3
+TYPE3=$4
+
+lynx --dump "https://google.com/search?q=site:$HOST+filetype:$TYPE1+filetype:$TYPE2+filetype:$TYPE3" > collection_file.txt
+
+
+counter=1
+
+for url in $(cat collection_file.txt); do
+
+    #curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" "$url" | grep -E "\.($TYPE1|$TYPE2|$TYPE3)$" > url_files_$counter.txt
+    curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" "${url}" | grep -E "\.(${TYPE1}|${TYPE2}|${TYPE3})"
+
+
+    #wget -q -O - "$url" | grep -oP '[\w\.-]+@[\w\.-]+\.\w+' > "url_files_$counter.txt"
+    
+     echo "searching..."
+     ((counter++))
+     sleep 10
+done
+
+
