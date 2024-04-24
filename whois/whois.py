@@ -26,7 +26,9 @@ else:
                 break
             response += part
 
-        decoded_response = response.decode('utf-8')
+        #decoded_response = response.decode('utf-8')
+        decoded_response = response.decode('ISO-8859-1')
+        
         refer_value = find_refer_value(decoded_response)
         if refer_value:
             print(f"{Fore.GREEN}Here is the Refer => {Fore.YELLOW}{refer_value}{Style.RESET_ALL}")
