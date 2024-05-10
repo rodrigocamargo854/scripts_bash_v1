@@ -1,12 +1,22 @@
 import socket
 import sys
+import os
+
+def check_connectivity(host, port):
+    response = os.system(f"ping -c 1 {host}")
+    if response == 0:
+        print(f"{host} is up.")
+        os.system(f"nmap -p {port} {host}")
+    else:
+        print(f"{host} is down or not reachable.")
 
 def banner_grabbing(host, port):
     try:
         s = socket.socket()
-        s.settimeout(2)
+        s.settimeout(5)
         s.connect((host, port))
-        banner = s.recv(1024)
+        banner = s.recv(2048)
+        s.close()
         return banner
     except Exception as e:
         return f"Não foi possível conectar ou receber o banner de {host}:{port}: {e}"
@@ -16,6 +26,7 @@ def process_hosts_ports(hosts_ports_str):
     banners = []
     for host_port in hosts_ports:
         host, port = host_port.strip().split(':')
+        check_connectivity(host, port)
         banner = banner_grabbing(host, int(port))
         banners.append((host, port, banner))
     return banners

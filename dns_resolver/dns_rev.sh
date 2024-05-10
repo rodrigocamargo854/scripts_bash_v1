@@ -1,9 +1,11 @@
 #!/bin/bash
+if [ -z "$1" ]; then
+    echo "Usage: $0 <domain>"
+    exit 1
+fi
 
-IP=$1
-RANGE_START=$2
-RANGE_FINISH=$3
+domain=$1
 
-for item in $(seq $RANGE_START $RANGE_FINISH);do
-host -t ptr $IP.$item;
+for ip in $(dig +short $domain | grep -P '^\d+\.\d+\.\d+\.\d+$'); do
+    host $ip
 done

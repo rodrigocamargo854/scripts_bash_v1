@@ -1,3 +1,0 @@
-#!/bin/bash
-
-lynx --dump "https://google.com/search&q=site:desecsecurity.com+ext:pdf" | grep ".pdf" 
